@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\App;
 
 Route::get('/', function () {
     return view('index');
@@ -20,4 +20,6 @@ Route::middleware([
 
 
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale'])->name('languageConverter');
+Route::post('/addUser', [UserController::class, 'store'])->name('add');
+
 

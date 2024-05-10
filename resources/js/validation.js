@@ -49,7 +49,7 @@ function validateForm() {
     }
 
     // Address Validation
-    var address = document.getElementById("adress").value.trim();
+    var address = document.getElementById("address").value.trim();
     if (address === "") {
 
         errorMessages.push("Please enter your address.");
@@ -87,7 +87,7 @@ function validateForm() {
     // Image Validation 
     var fileinput = document.querySelector("input[type='file']");
     if (!fileinput.files[0] || !isValidImage(fileinput.files[0].name)) {
-        errorMessages.push("Please upload a valid image file(jpg, jpeg, png, gif).");
+        errorMessages.push("Please upload a valid image file(jpg, jpeg, png).");
     }
     return errorMessages;
 }

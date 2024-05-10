@@ -49,7 +49,7 @@ function validateForm() {
     }
 
     // Address Validation
-    var address = document.getElementById("adress").value.trim();
+    var address = document.getElementById("address").value.trim();
     if (address === "") {
 
         errorMessages.push("Please enter your address.");
