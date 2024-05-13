@@ -87,7 +87,7 @@ function validateForm() {
     // Image Validation 
     var fileinput = document.querySelector("input[type='file']");
     if (!fileinput.files[0] || !isValidImage(fileinput.files[0].name)) {
-        errorMessages.push("Please upload a valid image file(jpg, jpeg, png).");
+        errorMessages.push("Please upload a valid image file(jpg, jpeg, png, gif).");
     }
     return errorMessages;
 }

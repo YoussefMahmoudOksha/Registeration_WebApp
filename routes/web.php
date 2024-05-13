@@ -3,6 +3,8 @@
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ActorApi;
+
 
 Route::get('/', function () {
     return view('index');
@@ -19,7 +21,6 @@ Route::middleware([
 });
 
 
+Route::get('/apiActor/{date}', [ActorApi::class, 'fetchActorsByBirthday'])->name('apiActor');
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale'])->name('languageConverter');
 Route::post('/addUser', [UserController::class, 'store'])->name('add');
-
-
