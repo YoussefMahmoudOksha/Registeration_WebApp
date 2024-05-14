@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -62,4 +61,33 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // For Unit Testing Methods
+    // protected $confirmPassword;
+
+    public function isValidPhoneNumber()
+    {
+        return preg_match('/^(011|010|012|015)/', $this->phone) === 1;
+    }
+//  public function passwordMatches()
+// {
+//     return $this->password === $this->confirmPassword;
+// }
+
+public function isAdult($birthdate)
+{
+    $birthdate = new \DateTime($birthdate);
+    $now = new \DateTime();
+    $age = $now->diff($birthdate)->y;
+
+    return $age >= 18;
+}
+public function isValidImageExtension($filename)
+{
+    $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif','svg','webp','bmp'];
+
+    return in_array($extension, $allowedExtensions);
+}
 }
