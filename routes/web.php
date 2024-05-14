@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorApi;
 
@@ -24,3 +25,8 @@ Route::middleware([
 Route::get('/apiActor/{date}', [ActorApi::class, 'fetchActorsByBirthday'])->name('apiActor');
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale'])->name('languageConverter');
 Route::post('/addUser', [UserController::class, 'store'])->name('add');
+
+Route::get('/send', [MailController::class, 'sendEmail']);
+
+//Route::post('/send', [UserController::class, 'store'])->name('send');
+//Route::get('/send', [MailController::class, 'sendemail']);

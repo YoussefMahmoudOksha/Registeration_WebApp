@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use App\Mail\MailNotify;
+use Illuminate\Support\Facades\Mail;
 
 
 
@@ -68,9 +70,22 @@ class UserController extends Controller
             Log::debug('Debug message from UserController: ' . $insert->password);
             Log::debug('Debug message from UserController image: ' . $insert->image);
      
+        
+
             $insert->save();
             Session::flash('success', 'User registered successfully');
-                   
+            
+            try {
+                // Pass the new user to the MailController
+                $mailController = new MailController();
+                $mailController->sendEmail($insert);
+                return response()->json(['message' => 'Great! Please check your email for verification.']);
+            } catch (\Exception $e) {
+                // Log or handle the error
+                return response()->json(['error' => 'Failed to create MailController instance: ' . $e->getMessage()]);
+            }
+            
+        
 
         }catch (ValidationException $e) {
             $errors = $e->errors();
