@@ -7,7 +7,7 @@
     <h1>New User Registered!</h1>
     <p>A new user has registered with the following details:</p>
     <ul>
-        <li><strong>Name:</strong> {{ $user->name }}</li>
+        <li><strong>Name:</strong> {{ $user->fullname }}</li>
         <li><strong>Email:</strong> {{ $user->email }}</li>
         <li><strong>Username:</strong> {{ $user->username }}</li>
         <!-- Add more user details here as needed -->

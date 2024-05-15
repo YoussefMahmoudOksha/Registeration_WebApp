@@ -79,7 +79,7 @@ class UserController extends Controller
                 // Pass the new user to the MailController
                 $mailController = new MailController();
                 $mailController->sendEmail($insert);
-                return response()->json(['message' => 'Great! Please check your email for verification.']);
+                // return response()->json(['message' => 'Great! Please check your email for verification.']);
             } catch (\Exception $e) {
                 // Log or handle the error
                 return response()->json(['error' => 'Failed to create MailController instance: ' . $e->getMessage()]);
