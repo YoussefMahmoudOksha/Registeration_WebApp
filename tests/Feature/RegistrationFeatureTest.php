@@ -9,20 +9,20 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithDatabase;
 use Tests\TestCase;
-use Illuminate\Http\UploadedFile;
+use App\Models\User;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\DB;
+
 class RegistrationFeatureTest extends TestCase
 {
     use RefreshDatabase;
     use InteractsWithDatabase;
+    use WithoutMiddleware;
 
-    // still not working !!
+
+
     public function test_registration_form()
     {
-        // specify the database connection
-        config(['database.default' => 'regdb']);
-
-        //$image = UploadedFile::fake()->image('photo.jpg');
-
         $controller = new UserController();
         $request = new Request([
             'fullname' => 'Ahmed Nabil',
@@ -32,7 +32,7 @@ class RegistrationFeatureTest extends TestCase
             'address' => 'maadi',
             'email' => 'ahmed@gmail.com',
             'password' => 'Ahmed123!',
-            //'image' => $image,
+            'image' => '171577661014 (2).jpg',
         ]);
         $response = $controller->store($request);
 
@@ -40,6 +40,23 @@ class RegistrationFeatureTest extends TestCase
         $this->assertTrue(session()->has('success'));
     }
 
+
+    public function test_registration_form_submission()
+    {
+        $response = $this->post('/addUser', [
+            'fullname' => 'Ahmed Nabil',
+            'username' => 'medo',
+            'birthdate' => '2003-01-01',
+            'phone' => '01145372314',
+            'address' => 'maadi',
+            'email' => 'ahmed@gmail.com',
+            'password' => 'Ahmed123!',
+            'image' => '171577661014 (2).jpg',
+        ]);
+        $response->assertRedirect();
+        $this->get($response->getTargetUrl())
+             ->assertStatus(200);
+    }
     public function test_example(): void
     {
         $response = $this->get('/');

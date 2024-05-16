@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
-    
+
     /**
      * Store a newly created resource in storage.
      */
@@ -30,11 +30,11 @@ class UserController extends Controller
                 'address' => 'required',
                 'email' => 'required',
                 'password' => 'required|min:8|regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/',
-                'image' => 'mimes:png,jpeg,jpg|max:2048',
+                //'image' => 'mimes:png,jpeg,jpg|max:2048',
             ]);
-    
+
             Log::debug('after validate: ');
-     
+
             $filePath = public_path('uploads');
             $insert = new reguser();
             $insert->fullname = $request->fullname;
@@ -42,14 +42,14 @@ class UserController extends Controller
             $insert->birthdate = $request->birthdate;
             $insert->phone = $request->phone;
             $insert->address = $request->address;
-            $insert->email = $request->email;        
+            $insert->email = $request->email;
             $insert->password = bcrypt($request->password); // Encryption
-            
+
             Log::debug('before if: ');
             if ($request->hasfile('image')) {
                 $file = $request->file('image');
                 $file_name = time() . $file->getClientOriginalName();
-     
+
                 if ($file->isValid()) {
                     Log::debug('No Error Image: ');
                     $file_name = time() . $file->getClientOriginalName();
@@ -59,8 +59,8 @@ class UserController extends Controller
                     Log::debug('Error uploading file: ' . $file->getErrorMessage());
                 }
             }
-    
-                    
+
+
             Log::debug('Debug message from UserController: ' . $insert->fullname);
             Log::debug('Debug message from UserController: ' . $insert->username);
             Log::debug('Debug message from UserController: ' . $insert->birthdate);
@@ -69,12 +69,12 @@ class UserController extends Controller
             Log::debug('Debug message from UserController: ' . $insert->email);
             Log::debug('Debug message from UserController: ' . $insert->password);
             Log::debug('Debug message from UserController image: ' . $insert->image);
-     
-        
+
+
 
             $insert->save();
             Session::flash('success', 'User registered successfully');
-            
+
             try {
                 // Pass the new user to the MailController
                 $mailController = new MailController();
@@ -84,8 +84,8 @@ class UserController extends Controller
                 // Log or handle the error
                 return response()->json(['error' => 'Failed to create MailController instance: ' . $e->getMessage()]);
             }
-            
-        
+
+
 
         }catch (ValidationException $e) {
             $errors = $e->errors();
@@ -95,7 +95,7 @@ class UserController extends Controller
         }
 
         return redirect()->back()->withInput();
-         
+
     }
 
 }
